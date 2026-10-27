@@ -1,0 +1,189 @@
+/* Custom Styles for Micrositio Dilema Bioético */
+:root {
+  --primary: #0284c7;
+  --primary-dark: #0369a1;
+  --accent: #0ea5e9;
+  --bg-gradient-start: #0b0f19;
+  --bg-gradient-end: #111827;
+}
+
+/* Universal Link Styling - Eliminate all underlines */
+a,
+a:link,
+a:visited,
+a:hover,
+a:active,
+a:focus {
+  text-decoration: none !important;
+  text-decoration-line: none !important;
+  border-bottom: none !important;
+  outline: none !important;
+}
+
+/* Navigation items without underline - only color focus */
+.nav-link,
+.mobile-nav-link {
+  text-decoration: none !important;
+  text-decoration-line: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  text-decoration: none !important;
+  color: #38bdf8 !important;
+}
+
+.nav-link.active-nav {
+  color: #38bdf8 !important;
+  font-weight: 600;
+  text-decoration: none !important;
+  border-bottom: none !important;
+}
+
+/* Base Typography & Readability */
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.75;
+  color: #e2e8f0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.011em;
+  background-color: #020617;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: -0.025em;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.25;
+}
+
+p {
+  line-height: 1.75;
+  color: #cbd5e1;
+}
+
+blockquote {
+  font-family: 'Merriweather', Georgia, serif;
+  line-height: 1.8;
+  color: #f1f5f9;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.6);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0284c7;
+}
+
+/* Reading Progress Bar */
+#reading-progress {
+  transition: width 0.1s ease-out;
+}
+
+/* Glassmorphism Classes */
+.glass-panel {
+  background: rgba(30, 41, 59, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Animated gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-alt {
+  background: linear-gradient(135deg, #34d399 0%, #38bdf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Interactive slider styles */
+input[type=range] {
+  accent-color: #0284c7;
+}
+
+/* Pulse animation for live indicators */
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.75; transform: scale(1.04); }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Card hover glow */
+.card-hover-glow {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-hover-glow:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px -10px rgba(14, 165, 233, 0.2);
+  border-color: rgba(56, 189, 248, 0.4);
+}
+
+/* Infografía Narrada Flow Node Styles */
+.narrativa-step-btn.active-step {
+  background-color: #0284c7 !important;
+  color: #ffffff !important;
+  border-color: #38bdf8 !important;
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.35);
+}
+
+.narrativa-step-card {
+  transition: all 0.35s ease;
+}
+
+/* Print styles for academic submission */
+@media print {
+  header, footer, #reading-progress, .no-print, button, #interactive-simulator, #infografia-narrada-player {
+    display: none !important;
+  }
+  
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 11pt;
+    line-height: 1.5;
+  }
+  
+  .glass-panel {
+    background: none !important;
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+    color: #000 !important;
+    break-inside: avoid;
+  }
+
+  h1, h2, h3, h4 {
+    color: #000 !important;
+    page-break-after: avoid;
+  }
+}

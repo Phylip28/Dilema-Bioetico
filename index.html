@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html lang="es" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sesgos Algorítmicos en el Triaje Médico | Micrositio Bioético</title>
+  
+  <!-- SEO & Metadata -->
+  <meta name="description" content="Micrositio web de investigación, análisis interdisciplinario y deliberación bioética sobre sesgos algorítmicos en el triaje médico e inteligencia artificial.">
+  <meta name="author" content="Juan Felipe Rendón Herrera - Ingeniería de Sistemas">
+  
+  <!-- Google Fonts: Inter & JetBrains Mono & Merriweather -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              900: '#0c4a6e',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+            serif: ['Merriweather', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-sky-500 selection:text-white transition-colors duration-300">
+
+  <!-- Reading Progress Bar -->
+  <div id="reading-progress" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-sky-400 via-indigo-500 to-emerald-400 z-50 w-0"></div>
+
+  <!-- =========================================================================
+       NAVIGATION HEADER (SIN SUBRAYADO)
+  ========================================================================== -->
+  <header class="fixed top-0 left-0 right-0 z-40 bg-slate-950/85 backdrop-blur-md border-b border-slate-800 transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      
+      <!-- Brand & Academic Tag -->
+      <a href="#hero" class="flex items-center space-x-3 group no-underline">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-sky-500/20 group-hover:scale-105 transition-transform">
+          <i data-lucide="scale" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <span class="font-bold text-sm sm:text-base tracking-tight text-white group-hover:text-sky-400 transition-colors block">
+            Bioética & IA en Triaje
+          </span>
+          <span class="text-xs text-slate-400 block -mt-0.5 font-normal">
+            Ingeniería de Sistemas • Proyecto Integrador
+          </span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Menu (Sin subrayado, solo enfoque de color) -->
+      <nav class="hidden lg:flex items-center space-x-1 text-xs xl:text-sm font-medium text-slate-300">
+        <a href="#seccion1" class="nav-link no-underline px-3 py-1.5 rounded-lg hover:text-sky-400 transition-colors">1. Presentación</a>
+        <a href="#seccion2" class="nav-link no-underline px-3 py-1.5 rounded-lg hover:text-sky-400 transition-colors">2. Análisis Interdisciplinario</a>
+        <a href="#seccion3" class="nav-link no-underline px-3 py-1.5 rounded-lg hover:text-sky-400 transition-colors">3. La Voz de la Experiencia</a>
+        <a href="#seccion4" class="nav-link no-underline px-3 py-1.5 rounded-lg hover:text-sky-400 transition-colors">4. Deliberación Ética</a>
+        <a href="#seccion5" class="nav-link no-underline px-3 py-1.5 rounded-lg hover:text-sky-400 transition-colors">5. Conclusiones</a>
+        <a href="#seccion6" class="nav-link no-underline px-3 py-1.5 rounded-lg hover:text-sky-400 transition-colors">6. Referencias</a>
+      </nav>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center space-x-3">
+        <!-- GitHub Repo Link -->
+        <a href="https://github.com/Phylip28/Dilema-Bioetico" target="_blank" rel="noopener noreferrer" class="hidden sm:flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-xs font-medium text-slate-200 border border-slate-700 transition-colors no-underline">
+          <i data-lucide="github" class="w-4 h-4"></i>
+          <span>GitHub</span>
+        </a>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-lg bg-slate-800 text-slate-300 hover:text-white" aria-label="Abrir menú" aria-expanded="false">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Menu -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-slate-900 border-b border-slate-800 px-4 pt-3 pb-6 space-y-2">
+      <a href="#seccion1" class="mobile-nav-link block px-3 py-2 rounded-md text-sm text-slate-200 hover:bg-slate-800 no-underline">1. Presentación del Dilema</a>
+      <a href="#seccion2" class="mobile-nav-link block px-3 py-2 rounded-md text-sm text-slate-200 hover:bg-slate-800 no-underline">2. Análisis Interdisciplinario</a>
+      <a href="#seccion3" class="mobile-nav-link block px-3 py-2 rounded-md text-sm text-slate-200 hover:bg-slate-800 no-underline">3. La Voz de la Experiencia (Entrevista)</a>
+      <a href="#seccion4" class="mobile-nav-link block px-3 py-2 rounded-md text-sm text-slate-200 hover:bg-slate-800 no-underline">4. Deliberación Ética</a>
+      <a href="#seccion5" class="mobile-nav-link block px-3 py-2 rounded-md text-sm text-slate-200 hover:bg-slate-800 no-underline">5. Conclusiones y Metacognición</a>
+      <a href="#seccion6" class="mobile-nav-link block px-3 py-2 rounded-md text-sm text-slate-200 hover:bg-slate-800 no-underline">6. Referencias APA</a>
+    </div>
+  </header>
+
+  <main class="pt-16">
+
+    <!-- =========================================================================
+         HERO & PORTADA ACADÉMICA (PORTADA Y METADATOS EN SINGULAR)
+    ========================================================================== -->
+    <section id="hero" class="relative overflow-hidden py-20 lg:py-28 border-b border-slate-800 bg-gradient-to-b from-slate-900/60 via-slate-950 to-slate-950">
+      <div class="absolute inset-0 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:24px_24px] opacity-10"></div>
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        <!-- Academic Pill Badges -->
+        <div class="flex flex-wrap items-center gap-2 mb-6">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-sky-500/10 text-sky-400 border border-sky-500/20">
+            <i data-lucide="cpu" class="w-3.5 h-3.5 mr-1.5"></i> Inteligencia Artificial & Bioética
+          </span>
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+            <i data-lucide="git-branch" class="w-3.5 h-3.5 mr-1.5"></i> Fase 2: Micrositio Web Integrador
+          </span>
+        </div>
+
+        <!-- Main Title & Subtitle -->
+        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
+          Sesgos algorítmicos en el triaje médico: <br>
+          <span class="gradient-text">¿Eficiencia automatizada o discriminación codificada?</span>
+        </h1>
+
+        <p class="text-base sm:text-xl text-slate-300 max-w-4xl mb-10 leading-relaxed font-normal">
+          Un micrositio de deliberación bioética, análisis interdisciplinario e ingeniería de software sobre el impacto de la asignación automatizada de recursos hospitalarios críticos y la reproducción algorítmica de desigualdades históricas.
+        </p>
+
+        <!-- Portada Academic Metadata Card -->
+        <div class="glass-panel rounded-2xl p-6 sm:p-8 shadow-2xl border border-slate-700/60 max-w-4xl">
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 text-left">
+            <div>
+              <span class="text-xs uppercase tracking-wider text-slate-400 block font-semibold mb-1">Autor / Investigador</span>
+              <p class="text-white font-medium flex items-center">
+                <i data-lucide="user-check" class="w-4 h-4 mr-2 text-sky-400"></i>
+                Juan Felipe Rendón H.
+              </p>
+            </div>
+            <div>
+              <span class="text-xs uppercase tracking-wider text-slate-400 block font-semibold mb-1">Programa Académico</span>
+              <p class="text-white font-medium flex items-center">
+                <i data-lucide="code" class="w-4 h-4 mr-2 text-indigo-400"></i>
+                Ingeniería de Sistemas
+              </p>
+            </div>
+            <div>
+              <span class="text-xs uppercase tracking-wider text-slate-400 block font-semibold mb-1">Área Temática</span>
+              <p class="text-white font-medium flex items-center">
+                <i data-lucide="activity" class="w-4 h-4 mr-2 text-emerald-400"></i>
+                Bioética & Datos en Salud
+              </p>
+            </div>
+            <div>
+              <span class="text-xs uppercase tracking-wider text-slate-400 block font-semibold mb-1">Publicación</span>
+              <p class="text-white font-medium flex items-center">
+                <i data-lucide="calendar" class="w-4 h-4 mr-2 text-amber-400"></i>
+                Octubre 2026 • GitHub Pages
+              </p>
+            </div>
+          </div>
+          
+          <!-- Botón de ir al simulador (Intuitivo para todo público, sin subrayado) -->
+          <div class="mt-6 pt-5 border-t border-slate-700/50 flex items-center justify-end">
+            <a href="#interactive-simulator" class="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs sm:text-sm font-semibold shadow-lg shadow-sky-600/20 transition-all hover:scale-[1.02] no-underline">
+              <i data-lucide="sliders" class="w-4 h-4 mr-1 text-sky-200"></i>
+              <span>Probar Simulador de Decisiones</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECCIÓN 1: PRESENTACIÓN DEL DILEMA BIOÉTICO
+    ========================================================================== -->
+    <section id="seccion1" class="py-20 border-b border-slate-800">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Section Header -->
+        <div class="mb-12">
+          <span class="text-sky-400 text-xs font-mono uppercase tracking-widest block mb-2">01. Fundamentos & Alcance</span>
+          <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight">Presentación del Dilema Bioético</h2>
+          <p class="text-slate-400 mt-2 max-w-3xl text-sm sm:text-base">Contextualización rigurosa, delimitación del conflicto clínico-tecnológico, identificación de actores y justificación de relevancia.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          
+          <!-- Column 1 & 2: Contextualización y Problema -->
+          <div class="lg:col-span-2 space-y-6">
+            
+            <div class="glass-panel rounded-2xl p-6 sm:p-8 card-hover-glow">
+              <h3 class="text-xl font-bold text-white flex items-center mb-4">
+                <i data-lucide="file-text" class="w-5 h-5 mr-2 text-sky-400"></i>
+                Contextualización del Problema
+              </h3>
+              <p class="text-slate-200 text-sm sm:text-base leading-relaxed mb-4">
+                La creciente saturación de las unidades de cuidados intensivos (UCI) y salas de emergencias hospitalarias ha provocado la rápida incorporación de modelos de Inteligencia Artificial y Aprendizaje Automático (Machine Learning). Estos sistemas analizan en milisegundos miles de variables clínicas procedentes de Registros Electrónicos de Salud (EHR) para predecir tasas de mortalidad, riesgo de choque séptico o requerimiento de ventilación asistida, asignando con ello prioridades de triaje.
+              </p>
+              <p class="text-slate-200 text-sm sm:text-base leading-relaxed">
+                A simple vista, el despliegue de estos algoritmos promete una distribución óptima y neutral de los recursos escasos basada en la evidencia estadística. Sin embargo, surge un problema estructural determinante: <strong>los algoritmos no aprenden "salud", aprenden "datos"</strong>. Y estos datos provienen de décadas de desigualdades socioeconómicas, discriminación racial y disparidades de acceso a la salud ya institucionalizadas.
+              </p>
+            </div>
+
+            <div class="glass-panel rounded-2xl p-6 sm:p-8 card-hover-glow border-l-4 border-l-amber-500">
+              <h3 class="text-xl font-bold text-white flex items-center mb-4">
+                <i data-lucide="alert-triangle" class="w-5 h-5 mr-2 text-amber-400"></i>
+                Descripción del Núcleo del Conflicto
+              </h3>
+              <p class="text-slate-200 text-sm sm:text-base leading-relaxed mb-4">
+                El caso paradigmático documentado por <em>Obermeyer et al. (Science, 2019)</em> demostró cómo un algoritmo que gestionaba la atención de más de 200 millones de pacientes utilizó el gasto sanitario anual como variable sustituta (proxy) de la gravedad clínica. Debido a que las poblaciones vulnerables y afrodescendientes históricamente gastan menos per cápita por barreras de aseguramiento y desconfianza médica, el sistema clasificó a pacientes vulnerables gravemente enfermos con la misma prioridad que pacientes privilegiados con patologías leves.
+              </p>
+              <div class="p-4 rounded-xl bg-slate-900/90 border border-slate-700/80 text-sm font-mono text-sky-300 leading-relaxed">
+                <strong>El dilema bioético central:</strong> ¿Es éticamente admisible maximizar la tasa global agregada de supervivencia hospitalaria mediante un algoritmo de caja negra, aun a sabiendas de que introduce un margen sistemático de desatención letal contra poblaciones históricamente vulnerables?
+              </div>
+            </div>
+
+            <!-- Justificación de la Importancia -->
+            <div class="glass-panel rounded-2xl p-6 sm:p-8 card-hover-glow">
+              <h3 class="text-xl font-bold text-white flex items-center mb-3">
+                <i data-lucide="check-shield" class="w-5 h-5 mr-2 text-emerald-400"></i>
+                Justificación de la Importancia del Tema
+              </h3>
+              <p class="text-slate-200 text-sm sm:text-base leading-relaxed mb-3">
+                Para la <strong>Ingeniería de Sistemas</strong>, abordar este dilema no es un ejercicio retórico: es una emergencia de diseño de software. En las ciencias computacionales modernas, las decisiones técnicas cotidianas (como imputar valores nulos, normalizar variables o fijar umbrales ROC) tienen consecuencias bioéticas directas e irreversibles de vida o muerte.
+              </p>
+              <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                Comprender cómo se codifican los sesgos evita que el ingeniero actúe como un ejecutor ciego de tecnología opaca y asuma su responsabilidad social frente a los derechos humanos y la dignidad de cada paciente.
+              </p>
+            </div>
+
+          </div>
+
+          <!-- Column 3: Actores Involucrados & Contextos -->
+          <div class="space-y-6">
+            
+            <!-- Actores Involucrados -->
+            <div class="glass-panel rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-white flex items-center mb-4">
+                <i data-lucide="users" class="w-5 h-5 mr-2 text-indigo-400"></i>
+                Actores Involucrados
+              </h3>
+              <div class="space-y-3.5 text-xs sm:text-sm">
+                
+                <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+                  <div class="font-semibold text-sky-400 mb-1 flex items-center">
+                    <i data-lucide="user-x" class="w-3.5 h-3.5 mr-1.5"></i> Pacientes Vulnerables
+                  </div>
+                  <p class="text-slate-300">Sujetos pasivos sin voz técnica, con riesgo desproporcionado de despriorización por subestimación algorítmica de su gravedad.</p>
+                </div>
+
+                <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+                  <div class="font-semibold text-emerald-400 mb-1 flex items-center">
+                    <i data-lucide="stethoscope" class="w-3.5 h-3.5 mr-1.5"></i> Personal Médico de Triaje
+                  </div>
+                  <p class="text-slate-300">Enfrentan fatiga extrema y "sesgo de automatización" (automation bias), con la angustia moral de no poder explicar decisiones de caja negra.</p>
+                </div>
+
+                <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+                  <div class="font-semibold text-indigo-400 mb-1 flex items-center">
+                    <i data-lucide="terminal" class="w-3.5 h-3.5 mr-1.5"></i> Ingenieros de Sistemas & Data Scientists
+                  </div>
+                  <p class="text-slate-300">Responsables de la arquitectura, selección de variables proxy, métricas de error y supervisión ética de los modelos.</p>
+                </div>
+
+                <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+                  <div class="font-semibold text-amber-400 mb-1 flex items-center">
+                    <i data-lucide="building" class="w-3.5 h-3.5 mr-1.5"></i> Directivos & Comités Hospitalarios
+                  </div>
+                  <p class="text-slate-300">Presionados por eficiencia de camas, litigios de mala praxis y mandatos de beneficencia institucional.</p>
+                </div>
+
+                <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+                  <div class="font-semibold text-rose-400 mb-1 flex items-center">
+                    <i data-lucide="shield-alert" class="w-3.5 h-3.5 mr-1.5"></i> Reguladores y Entes Estatales
+                  </div>
+                  <p class="text-slate-300">Custodios de los derechos fundamentales a la salud, habeas data y vigilancia de tecnologías de alto riesgo.</p>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Contexto Multidimensional -->
+            <div class="glass-panel rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-white flex items-center mb-4">
+                <i data-lucide="globe" class="w-5 h-5 mr-2 text-sky-400"></i>
+                Contexto Multidimensional
+              </h3>
+              <ul class="space-y-2.5 text-xs sm:text-sm text-slate-300">
+                <li class="flex items-start">
+                  <span class="w-1.5 h-1.5 rounded-full bg-sky-400 mt-2 mr-2 shrink-0"></span>
+                  <span><strong>Tecnológico:</strong> Redes neuronales profundas sin trazabilidad explicable y teorema de imposibilidad matemática de paridad.</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-2 mr-2 shrink-0"></span>
+                  <span><strong>Social:</strong> Inequidad sistémica transferida de los barrios y hospitales públicos al código binario.</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="w-1.5 h-1.5 rounded-full bg-amber-400 mt-2 mr-2 shrink-0"></span>
+                  <span><strong>Jurídico:</strong> Derecho a la no discriminación algorítmica (Art. 22 RGPD, AI Act UE, Ley 1751 Estatutaria de Salud en Colombia).</span>
+                </li>
+                <li class="flex items-start">
+                  <span class="w-1.5 h-1.5 rounded-full bg-purple-400 mt-2 mr-2 shrink-0"></span>
+                  <span><strong>Ambiental:</strong> Huella de carbono de clústeres de cómputo en salud e infraestructura de Big Data.</span>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECCIÓN 2: ANÁLISIS INTERDISCIPLINARIO
+    ========================================================================== -->
+    <section id="seccion2" class="py-20 border-b border-slate-800 bg-slate-900/30">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Section Header -->
+        <div class="mb-12">
+          <span class="text-indigo-400 text-xs font-mono uppercase tracking-widest block mb-2">02. Diálogo Transversal</span>
+          <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight">Análisis Interdisciplinario</h2>
+          <p class="text-slate-400 mt-2 max-w-3xl text-sm sm:text-base">Convergencia dialéctica entre la bioética principialista, las teorías morales clásicas, la ciencia de datos y el derecho sanitario.</p>
+        </div>
+
+        <!-- Subsección A: Perspectiva Ética -->
+        <div class="mb-14">
+          <div class="flex items-center space-x-3 mb-6">
+            <div class="w-8 h-8 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center font-bold text-sm">A</div>
+            <h3 class="text-2xl font-bold text-white">Perspectiva Ética & Principios Bioéticos</h3>
+          </div>
+
+          <!-- Principios Bioéticos de Beauchamp y Childress Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            
+            <!-- Justicia -->
+            <div class="glass-panel rounded-2xl p-6 border-t-4 border-t-sky-500 card-hover-glow">
+              <div class="w-10 h-10 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center mb-4">
+                <i data-lucide="scale" class="w-5 h-5"></i>
+              </div>
+              <h4 class="font-bold text-white text-lg mb-2">Justicia Distributiva</h4>
+              <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-3">
+                Exige una distribución equitativa de beneficios y cargas sanitarias.
+              </p>
+              <div class="p-2.5 rounded-lg bg-slate-900 text-slate-300 text-xs border border-slate-800 leading-relaxed">
+                <strong>Violación en el dilema:</strong> El sesgo reproduce la brecha histórica castigando doblemente a los vulnerables. Contraviene el principio de diferencia de John Rawls.
+              </div>
+            </div>
+
+            <!-- No Maleficencia -->
+            <div class="glass-panel rounded-2xl p-6 border-t-4 border-t-rose-500 card-hover-glow">
+              <div class="w-10 h-10 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center mb-4">
+                <i data-lucide="shield-alert" class="w-5 h-5"></i>
+              </div>
+              <h4 class="font-bold text-white text-lg mb-2">No Maleficencia</h4>
+              <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-3">
+                <em>Primum non nocere</em>: Deber categórico de no infligir daño intencional ni negligente.
+              </p>
+              <div class="p-2.5 rounded-lg bg-slate-900 text-slate-300 text-xs border border-slate-800 leading-relaxed">
+                <strong>Violación en el dilema:</strong> Daño iatrogénico digital. Un falso negativo algorítmico priva a un paciente grave de una cama de cuidados intensivos, causando su muerte.
+              </div>
+            </div>
+
+            <!-- Beneficencia -->
+            <div class="glass-panel rounded-2xl p-6 border-t-4 border-t-emerald-500 card-hover-glow">
+              <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-4">
+                <i data-lucide="heart-pulse" class="w-5 h-5"></i>
+              </div>
+              <h4 class="font-bold text-white text-lg mb-2">Beneficencia</h4>
+              <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-3">
+                Obligación moral de actuar en beneficio del bienestar ajeno y salvar vidas.
+              </p>
+              <div class="p-2.5 rounded-lg bg-slate-900 text-slate-300 text-xs border border-slate-800 leading-relaxed">
+                <strong>Argumento a favor:</strong> Optimiza el flujo hospitalario y logra mayor supervivencia agregada en emergencias de saturación masiva.
+              </div>
+            </div>
+
+            <!-- Autonomía -->
+            <div class="glass-panel rounded-2xl p-6 border-t-4 border-t-indigo-500 card-hover-glow">
+              <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center mb-4">
+                <i data-lucide="key" class="w-5 h-5"></i>
+              </div>
+              <h4 class="font-bold text-white text-lg mb-2">Autonomía</h4>
+              <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-3">
+                Derecho del individuo a la autodeterminación y a decisiones informadas.
+              </p>
+              <div class="p-2.5 rounded-lg bg-slate-900 text-slate-300 text-xs border border-slate-800 leading-relaxed">
+                <strong>Violación en el dilema:</strong> Las cajas negras despojan al paciente y al médico de la capacidad de comprender y objetar el razonamiento del triaje.
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Tensiones Morales y Teorías Éticas -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <div class="glass-panel rounded-2xl p-6">
+              <div class="text-xs font-mono text-sky-400 uppercase tracking-wider mb-2">Teoría Ética I</div>
+              <h4 class="text-lg font-bold text-white mb-2">Utilitarismo (Bentham & Mill)</h4>
+              <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                Postula maximizar la mayor felicidad o supervivencia para el mayor número. Justifica el sacrificio del 5% de una minoría desaventajada si la supervivencia general se eleva en un 15%. Para la bioética clínica moderna, este utilitarismo puro degenera en tiranía estadística.
+              </p>
+            </div>
+
+            <div class="glass-panel rounded-2xl p-6">
+              <div class="text-xs font-mono text-emerald-400 uppercase tracking-wider mb-2">Teoría Ética II</div>
+              <h4 class="text-lg font-bold text-white mb-2">Deontología Kantiana</h4>
+              <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                Imperativo categórico: <em>"Trata a la humanidad siempre como un fin, jamás como un medio"</em>. Condena de raíz el modelo: ningún paciente vulnerable puede ser convertido en una variable de ajuste instrumental para optimizar métricas hospitalarias de supervivencia agregada.
+              </p>
+            </div>
+
+            <div class="glass-panel rounded-2xl p-6">
+              <div class="text-xs font-mono text-indigo-400 uppercase tracking-wider mb-2">Teoría Ética III</div>
+              <h4 class="text-lg font-bold text-white mb-2">Ética de la Responsabilidad (Jonas)</h4>
+              <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                El principio de responsabilidad frente al poder tecnológico desmesurado. Exige el principio de precaución: ante la incertidumbre y el potencial daño letal inadvertido de una caja negra, el deber ético prioritario es abstenerse de automatizar sin supervisión humana.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Subsección B: Perspectiva Disciplinar -->
+        <div>
+          <div class="flex items-center space-x-3 mb-6">
+            <div class="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold text-sm">B</div>
+            <h3 class="text-2xl font-bold text-white">Perspectiva Disciplinar: Ingeniería, Medicina & Derecho</h3>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <!-- Disciplina 1: Ingeniería de Sistemas -->
+            <div class="glass-panel rounded-2xl p-6 space-y-4">
+              <div class="flex items-center space-x-3">
+                <div class="p-2.5 rounded-xl bg-sky-500/10 text-sky-400">
+                  <i data-lucide="cpu" class="w-6 h-6"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-white">Ingeniería de Sistemas & IA</h4>
+                  <span class="text-xs text-sky-400 font-mono">Arquitectura & MLOps</span>
+                </div>
+              </div>
+              <ul class="text-xs sm:text-sm text-slate-300 space-y-2.5 leading-relaxed">
+                <li>• <strong>Variables Proxy:</strong> Peligro de usar costos o visitas previas en lugar de biomarcadores directos.</li>
+                <li>• <strong>Teorema de Imposibilidad (Kleinberg et al., 2016):</strong> Demostración matemática de que es imposible satisfacer a la vez paridad demográfica y calibración entre grupos desiguales.</li>
+                <li>• <strong>Técnicas de Mitigación:</strong> Reweighing (pre), Adversarial Debiasing (in) y calibración de umbrales por subgrupo (post).</li>
+                <li>• <strong>XAI (Explicabilidad):</strong> Algoritmos SHAP y LIME para generar justificaciones audibles por los médicos.</li>
+              </ul>
+            </div>
+
+            <!-- Disciplina 2: Medicina y Triaje Clínico -->
+            <div class="glass-panel rounded-2xl p-6 space-y-4">
+              <div class="flex items-center space-x-3">
+                <div class="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-400">
+                  <i data-lucide="stethoscope" class="w-6 h-6"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-white">Medicina & Triaje Clínico</h4>
+                  <span class="text-xs text-emerald-400 font-mono">Práctica Asistencial</span>
+                </div>
+              </div>
+              <ul class="text-xs sm:text-sm text-slate-300 space-y-2.5 leading-relaxed">
+                <li>• <strong>Protocolos ESI y Manchester:</strong> Escalas tradicionales de priorización clínica basadas en signos vitales y gravedad sintomática.</li>
+                <li>• <strong>Automation Bias:</strong> Fenómeno cognitivo donde el médico bajo estrés asume ciegamente la sugerencia de la IA sin deliberar.</li>
+                <li>• <strong>Human-in-the-Loop (HITL):</strong> La IA debe configurarse como asistente consultivo, nunca como decisor autónomo vinculante.</li>
+                <li>• <strong>Relación Médico-Paciente:</strong> Preservación de la empatía, el ojo clínico y la justificación humana del cuidado.</li>
+              </ul>
+            </div>
+
+            <!-- Disciplina 3: Derecho y Regulación -->
+            <div class="glass-panel rounded-2xl p-6 space-y-4">
+              <div class="flex items-center space-x-3">
+                <div class="p-2.5 rounded-xl bg-purple-500/10 text-purple-400">
+                  <i data-lucide="scale" class="w-6 h-6"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-white">Marco Normativo & Jurídico</h4>
+                  <span class="text-xs text-purple-400 font-mono">Gobernanza Legal</span>
+                </div>
+              </div>
+              <ul class="text-xs sm:text-sm text-slate-300 space-y-2.5 leading-relaxed">
+                <li>• <strong>AI Act de la UE (2024):</strong> Los sistemas de triaje y asignación de salud son catalogados como <em>Sistemas de Alto Riesgo</em> con auditorías forzosas.</li>
+                <li>• <strong>RGPD (Art. 22):</strong> Derecho fundamental de los ciudadanos a no ser sometidos a decisiones totalmente automatizadas con efectos jurídicos.</li>
+                <li>• <strong>Normativa Colombia:</strong> Ley 1751 de 2015 (Derecho Fundamental a la Salud) y Ley 1581 de 2012 (Habeas Data y datos sensibles).</li>
+                <li>• <strong>OMS (WHO 2021):</strong> Guía ética global que demanda explicabilidad, rendición de cuentas y soberanía clínica.</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SIMULADOR INTERACTIVO DE TRADE-OFF ÉTICO (WIDGET DE INGENIERÍA)
+    ========================================================================== -->
+    <section id="interactive-simulator" class="py-16 border-b border-slate-800 bg-gradient-to-b from-slate-950 via-slate-900/60 to-slate-950">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-10">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-sky-500/10 text-sky-400 border border-sky-500/20 mb-3">
+            <i data-lucide="sliders" class="w-3.5 h-3.5 mr-1.5"></i> Laboratorio de Modelado Interactivo
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-bold text-white">Simulador de Decisiones Médicas: Eficiencia vs. Igualdad</h2>
+          <p class="text-slate-300 text-sm sm:text-base mt-2">
+            Experimenta el dilema técnico y bioético de un ingeniero de sistemas: ajusta la regularización de equidad contra sesgos históricos y observa el impacto en tiempo real sobre la supervivencia y el descarte de pacientes vulnerables.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 glass-panel rounded-3xl p-6 sm:p-10 border border-slate-700/60 shadow-2xl">
+          
+          <!-- Controles de Simulación (Col 5) -->
+          <div class="lg:col-span-5 space-y-6">
+            <h3 class="text-lg font-bold text-white flex items-center">
+              <i data-lucide="settings" class="w-5 h-5 mr-2 text-sky-400"></i>
+              Parámetros del Pipeline Algorítmico
+            </h3>
+
+            <!-- Slider 1: Ponderación de Equidad (Debiasing) -->
+            <div>
+              <div class="flex justify-between text-xs sm:text-sm font-semibold mb-2">
+                <span class="text-slate-300">Ponderación de Equidad (&lambda; Debiasing):</span>
+                <span id="val-debias" class="text-sky-400 font-mono text-sm">45%</span>
+              </div>
+              <input id="sim-debias" type="range" min="0" max="100" value="45" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer">
+              <div class="flex justify-between text-[11px] text-slate-300 font-medium mt-1">
+                <span>0% (Utilitarismo puro / Modelo ciego)</span>
+                <span>100% (Paridad estricta)</span>
+              </div>
+            </div>
+
+            <!-- Slider 2: Umbral de Asignación de UCI -->
+            <div>
+              <div class="flex justify-between text-xs sm:text-sm font-semibold mb-2">
+                <span class="text-slate-300">Umbral de Severidad de Corte (Cutoff):</span>
+                <span id="val-threshold" class="text-indigo-400 font-mono text-sm">50%</span>
+              </div>
+              <input id="sim-threshold" type="range" min="30" max="80" value="50" class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer">
+              <div class="flex justify-between text-[11px] text-slate-300 font-medium mt-1">
+                <span>30% (Criterio flexible)</span>
+                <span>80% (Criterio restrictivo)</span>
+              </div>
+            </div>
+
+            <!-- Principios Bioéticos Evaluados dinámicamente -->
+            <div class="space-y-3 pt-3 border-t border-slate-800">
+              <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block">Puntajes Bioéticos Estimados:</span>
+              
+              <!-- Justicia -->
+              <div>
+                <div class="flex justify-between text-xs sm:text-sm mb-1">
+                  <span class="text-slate-300">Justicia Distributiva (Rawls):</span>
+                  <span id="score-justice" class="text-sky-400 font-mono">59/100</span>
+                </div>
+                <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                  <div id="bar-justice" class="bg-sky-500 h-full transition-all duration-300" style="width: 59%"></div>
+                </div>
+              </div>
+
+              <!-- Beneficencia -->
+              <div>
+                <div class="flex justify-between text-xs sm:text-sm mb-1">
+                  <span class="text-slate-300">Beneficencia Agregada (Throughput):</span>
+                  <span id="score-beneficence" class="text-emerald-400 font-mono">86/100</span>
+                </div>
+                <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                  <div id="bar-beneficence" class="bg-emerald-500 h-full transition-all duration-300" style="width: 86%"></div>
+                </div>
+              </div>
+
+              <!-- No Maleficencia -->
+              <div>
+                <div class="flex justify-between text-xs sm:text-sm mb-1">
+                  <span class="text-slate-300">No Maleficencia (Protección contra Daño):</span>
+                  <span id="score-nonmaleficence" class="text-purple-400 font-mono">68/100</span>
+                </div>
+                <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                  <div id="bar-nonmaleficence" class="bg-purple-500 h-full transition-all duration-300" style="width: 68%"></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Métricas del Modelo en Tiempo Real (Col 7) -->
+          <div class="lg:col-span-7 flex flex-col justify-between space-y-6">
+            
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              
+              <div class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 text-center">
+                <span class="text-[11px] uppercase tracking-wider text-slate-300 block mb-1 font-medium">Supervivencia Global</span>
+                <span id="stat-survival" class="text-2xl font-extrabold text-emerald-400 font-mono">86.8%</span>
+                <span class="text-[10px] text-slate-400 block mt-1">Eficiencia agregada</span>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 text-center">
+                <span class="text-[11px] uppercase tracking-wider text-slate-300 block mb-1 font-medium">Ratio Impacto Dispar</span>
+                <span id="stat-disparate" class="text-2xl font-extrabold text-sky-400 font-mono">0.73</span>
+                <span class="text-[10px] text-slate-400 block mt-1">Meta ética: &ge; 0.80</span>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 text-center">
+                <span class="text-[11px] uppercase tracking-wider text-slate-300 block mb-1 font-medium">Falso Negativo Vuln.</span>
+                <span id="stat-err-vuln" class="text-2xl font-extrabold text-rose-400 font-mono">24.8%</span>
+                <span class="text-[10px] text-slate-400 block mt-1">Desatención en minorías</span>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 text-center">
+                <span class="text-[11px] uppercase tracking-wider text-slate-300 block mb-1 font-medium">Falso Negativo Priv.</span>
+                <span id="stat-err-priv" class="text-2xl font-extrabold text-indigo-400 font-mono">9.2%</span>
+                <span class="text-[10px] text-slate-400 block mt-1">Grupo de referencia</span>
+              </div>
+
+            </div>
+
+            <!-- Veredicto Bioético Dinámico -->
+            <div id="sim-verdict" class="p-4 rounded-xl border border-sky-500/30 bg-sky-950/20 text-sky-200 text-sm leading-relaxed">
+              <strong>⚖️ Ponderación Bioética Equilibrada (Postura Defendida):</strong> Se alcanza un ratio de impacto dispar aceptable mitigando drásticamente el sesgo histórico sin desmoronar la eficacia clínica global. Equilibrio viable entre <em>Beneficencia Macro</em> y <em>No Maleficencia Individual</em> bajo supervisión humana.
+            </div>
+
+            <div class="p-4 rounded-xl bg-slate-900/70 border border-slate-800 text-xs sm:text-sm text-slate-300 leading-relaxed">
+              <strong class="text-white">Demostración técnica para el ingeniero de sistemas:</strong> Este widget evidencia empíricamente el <em>Teorema de Imposibilidad de Fairness</em>. No es posible maximizar simultáneamente la exactitud pura y la equidad sin una deliberación de trade-off explícitamente parametrizada en el código.
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECCIÓN 3: LA VOZ DE LA EXPERIENCIA (ENTREVISTA PROFESIONAL - LIMPIA Y EQUILIBRADA)
+    ========================================================================== -->
+    <section id="seccion3" class="py-20 border-b border-slate-800">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Section Header -->
+        <div class="mb-12">
+          <span class="text-emerald-400 text-xs font-mono uppercase tracking-widest block mb-2">03. Diálogo Especializado</span>
+          <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight">La Voz de la Experiencia</h2>
+          <p class="text-slate-400 mt-2 max-w-3xl text-sm sm:text-base">Entrevista en profundidad a un especialista en Arquitectura de Inteligencia Artificial y Datos Biomédicos, analizando los dilemas desde la trinchera del código.</p>
+        </div>
+
+        <!-- 3 Tarjetas Equilibradas: Perfil, Justificación y Enlace de Registro (Sin el reproductor ruidoso) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          
+          <!-- Card 1: Ing. David Morales Peña -->
+          <div class="glass-panel rounded-2xl p-6 sm:p-7 card-hover-glow flex flex-col justify-between">
+            <div>
+              <div class="flex items-center space-x-4 mb-4">
+                <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center text-white text-xl font-bold shadow-lg shadow-sky-500/20 shrink-0">
+                  DM
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold text-white">Ing. David Morales Peña</h3>
+                  <p class="text-xs text-sky-400 font-mono">M.Sc. en IA Biomédica</p>
+                  <p class="text-xs text-slate-400">Líder MLOps & Arquitectura Clínica</p>
+                </div>
+              </div>
+              <div class="text-xs sm:text-sm text-slate-300 space-y-2 border-t border-slate-800 pt-4 leading-relaxed">
+                <p>• <strong>Formación:</strong> Ingeniero de Sistemas, Magíster en Ciencias de la Computación con énfasis en Inteligencia Artificial en Salud.</p>
+                <p>• <strong>Experiencia:</strong> 9+ años diseñando modelos predictivos para UCI y sistemas de soporte a la decisión clínica.</p>
+                <p>• <strong>Rol ético:</strong> Miembro consultivo de Comités de Ética de Algoritmos Hospitalarios.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Justificación de la Elección -->
+          <div class="glass-panel rounded-2xl p-6 sm:p-7 card-hover-glow border-l-4 border-l-sky-500 flex flex-col justify-between">
+            <div>
+              <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-3 flex items-center">
+                <i data-lucide="check-circle-2" class="w-4 h-4 mr-1.5 text-sky-400"></i>
+                Justificación de su Elección
+              </h4>
+              <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                Este perfil resulta insustituible porque encarna la <strong>bisagra exacta entre el rigor matemático del software y las sentencias clínicas irreversibles</strong>. Mientras el médico recibe el veredicto en pantalla y el paciente sufre las consecuencias, es el Ingeniero de Datos quien decide cómo limpiar los datos, qué variables excluir, qué función de pérdida optimizar y cómo calibrar la incertidumbre cuando hay vidas en juego.
+              </p>
+            </div>
+            <div class="text-xs text-sky-400 font-mono mt-4 pt-3 border-t border-slate-800/60">
+              Conexión directa: Código $\rightarrow$ Sentencia Clínica
+            </div>
+          </div>
+
+          <!-- Card 3: Enlace al Registro Audiovisual Integrado -->
+          <div class="glass-panel rounded-2xl p-6 sm:p-7 card-hover-glow border-l-4 border-l-emerald-500 flex flex-col justify-between bg-gradient-to-b from-slate-900/60 to-emerald-950/20">
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mb-4">
+                <i data-lucide="video" class="w-6 h-6"></i>
+              </div>
+              <h4 class="text-base font-bold text-white mb-2">Registro Audiovisual Integrado</h4>
+              <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
+                Sesión grabada de 4:35 minutos conforme a las directrices académicas, con entrevistador (Juan Felipe Rendón) y entrevistado (Ing. David Morales) debidamente registrados en pantalla.
+              </p>
+            </div>
+            <button id="interview-video-play" class="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs sm:text-sm font-semibold flex items-center justify-center shadow-lg transition-all hover:scale-[1.02]">
+              <i data-lucide="play" class="w-4 h-4 mr-2"></i> Abrir Ficha de Registro de Video
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Las 5 Preguntas Más Significativas y sus Aportes Críticos (SIN MARCAS DE TIMESTAMP) -->
+        <div class="space-y-6">
+          <h3 class="text-xl font-bold text-white flex items-center">
+            <i data-lucide="message-square" class="w-5 h-5 mr-2 text-indigo-400"></i>
+            Batería de Preguntas del Foro: Respuestas y Aportes Clave
+          </h3>
+
+          <div class="grid grid-cols-1 gap-6">
+
+            <!-- Pregunta 1 -->
+            <div class="glass-panel rounded-2xl p-6 sm:p-8 card-hover-glow border-l-4 border-l-sky-500">
+              <div class="flex items-center justify-between mb-3">
+                <span class="px-3 py-1 rounded-full text-xs font-mono bg-sky-500/20 text-sky-400 font-semibold">Pregunta 1 • Precisión Estadística vs. Equidad</span>
+              </div>
+              <h4 class="text-base sm:text-lg font-bold text-white mb-3">
+                ¿Cómo maneja desde el nivel técnico y de código la tensión ética de saber que limpiar un set de datos para eliminar sesgos históricos puede reducir la precisión estadística general del modelo predictivo?
+              </h4>
+              <blockquote class="pl-4 border-l-2 border-slate-700 text-slate-200 text-sm sm:text-base italic mb-4 font-serif leading-relaxed">
+                "Desde la ingeniería tradicional nos enseñaron a adorar la métrica AUC-ROC y la precisión global como becerros de oro. Sin embargo, en salud, una precisión global del 92% puede esconder que en el 8% restante estás concentrando todos los falsos negativos sobre pacientes con bajos recursos. En el código implementamos funciones de pérdida penalizadas (fairness regularizers) y la frontera de Pareto. Si para garantizar que el modelo trate igual a un afrodescendiente o campesino que a un paciente de estratos altos tengo que ceder un 1.5% de exactitud global bruta, éticamente es imperativo hacerlo. Ese 1.5% no es 'ineficiencia', es justicia distributiva."
+              </blockquote>
+              <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 text-xs sm:text-sm text-sky-300 leading-relaxed">
+                <strong>💡 Aporte principal del profesional:</strong> Desmitificación de la métrica de precisión única. El software ético debe reemplazar la optimización unidimensional por el análisis multiobjetivo en la frontera de Pareto, donde la equidad es una restricción dura y no un accesorio cosmético.
+              </div>
+            </div>
+
+            <!-- Pregunta 2 -->
+            <div class="glass-panel rounded-2xl p-6 sm:p-8 card-hover-glow border-l-4 border-l-indigo-500">
+              <div class="flex items-center justify-between mb-3">
+                <span class="px-3 py-1 rounded-full text-xs font-mono bg-indigo-500/20 text-indigo-400 font-semibold">Pregunta 2 • Explicabilidad y Cajas Negras (XAI)</span>
+              </div>
+              <h4 class="text-base sm:text-lg font-bold text-white mb-3">
+                Cuando el algoritmo opera como una 'caja negra', ¿de qué manera justifica y documenta las decisiones de diseño para garantizar que los médicos puedan explicar a un paciente por qué se le negó un recurso crítico?
+              </h4>
+              <blockquote class="pl-4 border-l-2 border-slate-700 text-slate-200 text-sm sm:text-base italic mb-4 font-serif leading-relaxed">
+                "En medicina crítica, una caja negra pura no debería tener licencia de despliegue. Para salvar la brecha, implementamos dos salvaguardas: primero, documentación técnica estandarizada mediante 'Model Cards' (fichas del modelo), donde se declaran las limitaciones y poblaciones subrepresentadas. Segundo, integramos explicabilidad local usando valores SHAP (SHapley Additive exPlanations). Cuando la pantalla sugiere no ingresar a un paciente a UCI, el sistema debe desplegar qué variables clínicas concretas (saturación, lactato, escala SOFA) empujaron la predicción, de modo que el médico mantenga la capacidad de juicio y pueda justificar humanamente la decisión ante la familia."
+              </blockquote>
+              <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 text-xs sm:text-sm text-indigo-300 leading-relaxed">
+                <strong>💡 Aporte principal del profesional:</strong> La transparencia no es opcional en triaje; si una decisión algorítmica no puede ser explicada en términos clínicos comprensibles por un ser humano, el modelo viola el principio de autonomía y debe ser deshabilitado en favor del juicio clínico manual.
+              </div>
+            </div>
+
+            <!-- Pregunta 3 -->
+            <div class="glass-panel rounded-2xl p-6 sm:p-8 card-hover-glow border-l-4 border-l-rose-500">
+              <div class="flex items-center justify-between mb-3">
+                <span class="px-3 py-1 rounded-full text-xs font-mono bg-rose-500/20 text-rose-400 font-semibold">Pregunta 3 • Responsabilidad Moral y Legal en el Error Mortal</span>
+              </div>
+              <h4 class="text-base sm:text-lg font-bold text-white mb-3">
+                Frente a un error algorítmico que resulta en la muerte de un paciente por un triaje incorrecto, ¿dónde traza la línea de responsabilidad profesional entre el desarrollador del software, la empresa tecnológica y el hospital?
+              </h4>
+              <blockquote class="pl-4 border-l-2 border-slate-700 text-slate-200 text-sm sm:text-base italic mb-4 font-serif leading-relaxed">
+                "Existe el peligro perverso de la 'responsabilidad diluida' o el fantasma en la máquina: el hospital culpa al software, la empresa culpa a los datos históricos y el desarrollador dice que solo cumplió requerimientos. Esa evasión es inadmisible. La responsabilidad es escalonada y compartida: el proveedor tecnológico es responsable por vicios ocultos y falta de debida diligencia en pruebas de sesgo; el hospital es responsable por no entrenar a su personal clínico ni auditar la herramienta; y los ingenieros tenemos responsabilidad deontológica directa si sabíamos que el modelo fallaba en minorías y guardamos silencio o evadimos las pruebas de estrés ético."
+              </blockquote>
+              <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 text-xs sm:text-sm text-rose-300 leading-relaxed">
+                <strong>💡 Aporte principal del profesional:</strong> Rechazo tajante a la exoneración tecnológica. La cadena de custodia de la responsabilidad moral exige que los profesionales de software asuman el deber de denuncia ética (whistleblowing) y trazabilidad inmutable en los registros de auditoría.
+              </div>
+            </div>
+
+            <!-- Pregunta 4 -->
+            <div class="glass-panel rounded-2xl p-6 sm:p-8 card-hover-glow border-l-4 border-l-amber-500">
+              <div class="flex items-center justify-between mb-3">
+                <span class="px-3 py-1 rounded-full text-xs font-mono bg-amber-500/20 text-amber-400 font-semibold">Pregunta 4 • El Dilema Utilitarista: Supervivencia vs. Discriminación</span>
+              </div>
+              <h4 class="text-base sm:text-lg font-bold text-white mb-3">
+                Si un sistema de IA demuestra aumentar la supervivencia global de un hospital en un 15%, pero evidencia un margen sistemático de error del 5% contra una minoría específica, ¿qué criterios técnicos y éticos utilizaría para decidir si el sistema debe seguir operando o ser desconectado?
+              </h4>
+              <blockquote class="pl-4 border-l-2 border-slate-700 text-slate-200 text-sm sm:text-base italic mb-4 font-serif leading-relaxed">
+                "Este es el dilema supremo de nuestro tiempo. La respuesta ingenieril no puede ser el utilitarismo ciego. Si el 5% de error contra una minoría es sistemático y predecible, no estamos ante un error estocástico: estamos ante una discriminación institucionalizada automatizada. Mi criterio técnico y ético es claro: <strong>desconexión temporal de la función de asignación directa</strong>. El sistema debe degradarse inmediatamente a 'modo observador' o soporte secundario mientras se recalibra la submuestra mediante sobremuestreo (SMOTE) o regularización adversarial. Jamás podemos aceptar que la supervivencia de la mayoría se financie con la condena a muerte invisible de los más débiles."
+              </blockquote>
+              <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 text-xs sm:text-sm text-amber-300 leading-relaxed">
+                <strong>💡 Aporte principal del profesional:</strong> Principio de no instrumentalización: el imperativo bioético prohíbe que el beneficio colectivo convalide el daño selectivo a un subgrupo protegido. Ante un sesgo sistemático no mitigado, la desconexión del software es un acto de integridad profesional.
+              </div>
+            </div>
+
+            <!-- Pregunta 5 -->
+            <div class="glass-panel rounded-2xl p-6 sm:p-8 card-hover-glow border-l-4 border-l-emerald-500">
+              <div class="flex items-center justify-between mb-3">
+                <span class="px-3 py-1 rounded-full text-xs font-mono bg-emerald-500/20 text-emerald-400 font-semibold">Pregunta 5 • MLOps y Auditoría Continua de Drift</span>
+              </div>
+              <h4 class="text-base sm:text-lg font-bold text-white mb-3">
+                ¿Qué mecanismos de auditoría implementa durante el ciclo de vida del algoritmo para detectar y corregir sesgos emergentes que no estaban presentes en la fase inicial de pruebas de laboratorio?
+              </h4>
+              <blockquote class="pl-4 border-l-2 border-slate-700 text-slate-200 text-sm sm:text-base italic mb-4 font-serif leading-relaxed">
+                "Un modelo de IA no es un puente de concreto que se inaugura y permanece estático; es un organismo vivo sujeto a 'concept drift' y 'data drift'. Implementamos pipelines de MLOps con tests de equidad automatizados en la integración continua (CI/CD). Monitoreamos diariamente la métrica de 'Equalized Odds' entre grupos etarios, socioeconómicos y de género. Además, establecemos un 'circuit breaker' o fusible lógico: si la tasa de discrepancia en asignación supera el 2% en un periodo de 7 días, el pipeline lanza una alerta prioritaria y suspende la recomendación automática hasta la revisión humana por el comité bioético."
+              </blockquote>
+              <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 text-xs sm:text-sm text-emerald-300 leading-relaxed">
+                <strong>💡 Aporte principal del profesional:</strong> La bioética en software es un proceso permanente de DevOps/MLOps, no un certificado estático. Requiere salvaguardas técnicas automáticas (circuit breakers) que corten el flujo cuando se detecte degradación de la justicia algorítmica.
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECCIÓN 4: DELIBERACIÓN ÉTICA & INFOGRAFÍA NARRADA
+    ========================================================================== -->
+    <section id="seccion4" class="py-20 border-b border-slate-800 bg-slate-900/30">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Section Header -->
+        <div class="mb-12">
+          <span class="text-purple-400 text-xs font-mono uppercase tracking-widest block mb-2">04. Síntesis Argumentativa</span>
+          <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight">Deliberación Ética</h2>
+          <p class="text-slate-400 mt-2 max-w-3xl text-sm sm:text-base">Ponderación estructurada de posiciones, resolución de conflictos de principios y sustentación de una postura informada y humanista.</p>
+        </div>
+
+        <!-- Matriz de Posiciones en Conflicto -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          
+          <div class="glass-panel rounded-2xl p-6 border border-slate-800">
+            <div class="w-8 h-8 rounded-lg bg-red-500/10 text-red-400 flex items-center justify-center font-bold text-xs mb-3">Posición 1</div>
+            <h4 class="text-base font-bold text-white mb-2">Tecnocéntrica / Utilitarista Radical</h4>
+            <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
+              Defiende que el fin principal del triaje es maximizar las vidas totales salvadas sin importar si el algoritmo genera sesgos residuales contra grupos específicos. Considera el margen de error como una externalidad estadística inevitable.
+            </p>
+            <div class="text-xs text-red-400 font-medium">❌ Veredicto: Viola la dignidad humana ontológica y genera segregación sanitaria encubierta.</div>
+          </div>
+
+          <div class="glass-panel rounded-2xl p-6 border border-slate-800">
+            <div class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center font-bold text-xs mb-3">Posición 2</div>
+            <h4 class="text-base font-bold text-white mb-2">Bioconservadora / Ludismo Sanitario</h4>
+            <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
+              Aboga por la prohibición total de cualquier algoritmo predictivo en emergencias médicas, confiando exclusivamente en el criterio humano tradicional por temor a la deshumanización técnica.
+            </p>
+            <div class="text-xs text-amber-400 font-medium">⚠️ Veredicto: Inviable en colapsos hospitalarios; ignora que los humanos también albergan sesgos cognitivos y fatiga extrema.</div>
+          </div>
+
+          <div class="glass-panel rounded-2xl p-6 border-2 border-sky-500/60 bg-sky-950/20 shadow-xl">
+            <div class="w-8 h-8 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center font-bold text-xs mb-3">Posición 3</div>
+            <h4 class="text-base font-bold text-white mb-2 flex items-center">
+              Socio-técnica Responsable
+              <span class="ml-2 px-1.5 py-0.5 rounded text-[10px] bg-sky-500 text-white font-semibold">Postura Defendida</span>
+            </h4>
+            <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
+              Adopción de la IA exclusivamente como <strong>Sistema de Soporte a la Decisión (DSS)</strong> con supervisión humana obligatoria (*Human-in-the-loop*), código auditable, regularización activa de equidad y prohibición total de variables proxy económicas.
+            </p>
+            <div class="text-xs text-emerald-400 font-medium">✅ Veredicto: Síntesis virtuosa que armoniza Beneficencia con Justicia y No Maleficencia.</div>
+          </div>
+
+        </div>
+
+        <!-- Postura Sustentada Detallada (En Singular) -->
+        <div class="glass-panel rounded-3xl p-6 sm:p-10 mb-12 border border-slate-700/80">
+          <h3 class="text-xl sm:text-2xl font-bold text-white mb-4 flex items-center">
+            <i data-lucide="shield-check" class="w-6 h-6 mr-3 text-sky-400"></i>
+            Argumentación de la Postura Sustentada
+          </h3>
+          <div class="space-y-4 text-slate-200 text-sm sm:text-base leading-relaxed">
+            <p>
+              Como futuro <strong>Ingeniero de Sistemas</strong> formado con conciencia bioética, sostengo que <strong>la eficiencia computacional no puede comprarse al precio de la discriminación institucionalizada</strong>. La colisión entre la <em>Beneficencia Macro</em> (salvar más vidas en términos agregados) y la <em>Justicia Distributiva e Individual</em> (proteger equitativamente a cada ser humano sin distinción de raza o clase) debe resolverse bajo la primacía de la dignidad inalienable de la persona.
+            </p>
+            <p>
+              Mi postura establece cuatro pilares innegociables para el despliegue de sistemas de triaje automatizado:
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4 text-xs sm:text-sm">
+              <div class="p-4 rounded-xl bg-slate-900 border border-slate-800">
+                <span class="font-bold text-sky-400 block mb-1">1. Proscripción de Variables Proxy Espurias</span>
+                <span>Prohibir tajantemente que métricas de mercado o costos asistenciales históricos se utilicen como aproximaciones de la severidad patológica real.</span>
+              </div>
+              <div class="p-4 rounded-xl bg-slate-900 border border-slate-800">
+                <span class="font-bold text-indigo-400 block mb-1">2. Human-in-the-Loop Obligatorio y Vinculante</span>
+                <span>El algoritmo jamás emitirá sentencias de descarte definitivas; actuará como un segundo par de ojos orientador con facultad plena de objeción médica.</span>
+              </div>
+              <div class="p-4 rounded-xl bg-slate-900 border border-slate-800">
+                <span class="font-bold text-emerald-400 block mb-1">3. Auditorías Algorítmicas Abiertas y Continuas</span>
+                <span>Inspección periódica del código y los datos por comités interdisciplinarios de bioética antes y durante el despliegue en producción.</span>
+              </div>
+              <div class="p-4 rounded-xl bg-slate-900 border border-slate-800">
+                <span class="font-bold text-purple-400 block mb-1">4. Derecho a la Explicabilidad y Apelación</span>
+                <span>Garantía de que todo paciente o familiar pueda conocer las razones clínicas de su clasificación de triaje mediante interfaces XAI comprensibles.</span>
+              </div>
+            </div>
+            <p>
+              Al implementar estas salvaguardas, la ingeniería de sistemas no renuncia al inmenso potencial de la inteligencia artificial para salvar vidas, sino que la emancipa de su ceguera histórica, poniéndola al servicio auténtico de la justicia social y el bien común.
+            </p>
+          </div>
+        </div>
+
+        <!-- INFOGRAFÍA NARRADA INTERACTIVA (EN REEMPLAZO DEL PODCAST) -->
+        <div id="infografia-narrada-player" class="glass-panel rounded-3xl p-6 sm:p-10 border border-sky-500/40 bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900 shadow-2xl">
+          
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-6 border-b border-slate-800">
+            <div>
+              <div class="flex items-center space-x-2 text-xs font-mono text-sky-400 font-semibold mb-1">
+                <i data-lucide="layers" class="w-4 h-4"></i>
+                <span>RECURSO MULTIMEDIA ACADÉMICO</span>
+              </div>
+              <h3 class="text-xl sm:text-2xl font-bold text-white">Infografía Narrada: Ruta de Deliberación Bioética</h3>
+              <p class="text-xs sm:text-sm text-slate-400 mt-1">Recorrido visual guiado paso a paso por los conflictos, principios, mecanismos técnicos y el veredicto ético.</p>
+            </div>
+            
+            <div class="flex items-center space-x-3">
+              <button id="narrador-audio-btn" class="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs sm:text-sm font-semibold flex items-center shadow-lg transition-transform hover:scale-105">
+                <i data-lucide="play" class="w-4 h-4 mr-2 play-narrator-icon"></i>
+                <i data-lucide="pause" class="w-4 h-4 mr-2 pause-narrator-icon hidden"></i>
+                <span>Lectura Guiada</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Selector de Estaciones de la Infografía -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+            <button class="narrativa-step-btn active-step p-3.5 rounded-xl border border-sky-400 bg-sky-600 text-white text-left transition-all" data-step="0">
+              <span class="text-[10px] font-mono uppercase tracking-wider block opacity-80">Estación 01</span>
+              <span class="text-xs sm:text-sm font-bold block mt-0.5">El Conflicto Central</span>
+            </button>
+            <button class="narrativa-step-btn p-3.5 rounded-xl border border-slate-700 bg-slate-800 text-slate-300 text-left transition-all" data-step="1">
+              <span class="text-[10px] font-mono uppercase tracking-wider block opacity-80">Estación 02</span>
+              <span class="text-xs sm:text-sm font-bold block mt-0.5">Colisión de Principios</span>
+            </button>
+            <button class="narrativa-step-btn p-3.5 rounded-xl border border-slate-700 bg-slate-800 text-slate-300 text-left transition-all" data-step="2">
+              <span class="text-[10px] font-mono uppercase tracking-wider block opacity-80">Estación 03</span>
+              <span class="text-xs sm:text-sm font-bold block mt-0.5">Anatomía Técnica</span>
+            </button>
+            <button class="narrativa-step-btn p-3.5 rounded-xl border border-slate-700 bg-slate-800 text-slate-300 text-left transition-all" data-step="3">
+              <span class="text-[10px] font-mono uppercase tracking-wider block opacity-80">Estación 04</span>
+              <span class="text-xs sm:text-sm font-bold block mt-0.5">Veredicto Resolutivo</span>
+            </button>
+          </div>
+
+          <div id="narrador-status" class="text-xs text-sky-400 font-mono mb-6 flex items-center">
+            <i data-lucide="info" class="w-3.5 h-3.5 mr-1.5"></i> Haz clic en las estaciones o inicia la lectura guiada para avanzar por la deliberación.
+          </div>
+
+          <!-- Paneles de la Infografía Narrada -->
+          <div class="space-y-6">
+
+            <!-- Panel 1: El Conflicto Central -->
+            <div class="narrativa-step-panel glass-panel rounded-2xl p-6 sm:p-8 border border-slate-700">
+              <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <!-- Visual Infographic Diagram -->
+                <div class="lg:col-span-5 p-6 rounded-2xl bg-slate-900 border border-slate-800 text-center space-y-4">
+                  <div class="inline-flex p-3 rounded-2xl bg-red-500/10 text-red-400 border border-red-500/20 mb-2">
+                    <i data-lucide="zap" class="w-8 h-8"></i>
+                  </div>
+                  <h4 class="font-bold text-white text-base">Tensión de Optimización</h4>
+                  <div class="space-y-2 text-xs">
+                    <div class="p-2.5 rounded-lg bg-emerald-950/40 border border-emerald-500/30 text-emerald-300">
+                      <strong>+15% Supervivencia Macroscópica:</strong> Maximización utilitarista agregada de camas.
+                    </div>
+                    <div class="text-slate-400 font-bold">VS</div>
+                    <div class="p-2.5 rounded-lg bg-rose-950/40 border border-rose-500/30 text-rose-300">
+                      <strong>5% Descarte Sistemático:</strong> Error concentrado letalmente en minorías vulnerables.
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Narrated Commentary Text -->
+                <div class="lg:col-span-7 space-y-3">
+                  <span class="px-2.5 py-1 rounded-full text-xs font-mono bg-sky-500/20 text-sky-400 font-semibold">Narración del Investigador • Estación 1</span>
+                  <h4 class="text-lg font-bold text-white">Desmontando la ilusión de la neutralidad cuantitativa</h4>
+                  <p class="text-slate-200 text-sm sm:text-base leading-relaxed font-serif italic">
+                    "Al iniciar este proceso deliberativo, el primer error común es sucumbir ante el encanto de los grandes números: un aumento del 15% en la supervivencia hospitalaria seduce a cualquier administrador de salud. Sin embargo, cuando se examina la distribución del error, la bioética devela una verdad incómoda: el sistema no está curando más eficientemente por igual; está optimizando sus recursos a expensas de relegar a los grupos que históricamente ya sufrían desatención médica. La matemática no discrimina por malicia, pero automatiza quirúrgicamente la exclusión."
+                  </p>
+                  <p class="text-slate-400 text-xs sm:text-sm">
+                    <strong>Punto clave:</strong> Toda función de optimización global que no considere restricciones de equidad se convierte inevitablemente en un instrumento de discriminación institucionalizada.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Panel 2: Colisión de Principios -->
+            <div class="narrativa-step-panel glass-panel rounded-2xl p-6 sm:p-8 border border-slate-700 hidden">
+              <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <!-- Visual Infographic Diagram -->
+                <div class="lg:col-span-5 p-6 rounded-2xl bg-slate-900 border border-slate-800 text-center space-y-4">
+                  <div class="inline-flex p-3 rounded-2xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 mb-2">
+                    <i data-lucide="scale" class="w-8 h-8"></i>
+                  </div>
+                  <h4 class="font-bold text-white text-base">Balanza de Principialismo</h4>
+                  <div class="space-y-2 text-xs">
+                    <div class="p-3 rounded-lg bg-sky-950/50 border border-sky-500/40 text-sky-200 text-left">
+                      <strong>⚖️ Justicia (Rawls) & No Maleficencia:</strong> Prohibición categórica de sacrificar vidas inocentes en beneficio de métricas colectivas.
+                    </div>
+                    <div class="p-3 rounded-lg bg-slate-800 text-slate-300 text-left">
+                      <strong>📈 Beneficencia Macro (Bentham):</strong> Subordinada deontológicamente al respeto de la dignidad intrínseca de cada individuo.
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Narrated Commentary Text -->
+                <div class="lg:col-span-7 space-y-3">
+                  <span class="px-2.5 py-1 rounded-full text-xs font-mono bg-indigo-500/20 text-indigo-400 font-semibold">Narración del Investigador • Estación 2</span>
+                  <h4 class="text-lg font-bold text-white">El juicio principialista de Beauchamp & Childress</h4>
+                  <p class="text-slate-200 text-sm sm:text-base leading-relaxed font-serif italic">
+                    "En esta segunda estación confronto los cuatro principios clásicos. La colisión entre la Beneficencia macroscópica y la Justicia distributiva no puede resolverse mediante una regla utilitarista simple. Como postuló John Rawls con su principio de diferencia, las desigualdades de trato solo son admisibles si favorecen a los miembros más vulnerables de la sociedad. A esto sumamos el principio de No Maleficencia: un falso negativo que prive de una cama de UCI a una persona en estado crítico no es una externalidad aceptable, sino un daño iatrogénico letal inducido por software."
+                  </p>
+                  <p class="text-slate-400 text-xs sm:text-sm">
+                    <strong>Punto clave:</strong> El imperativo deontológico kantiano prohíbe instrumentalizar a ningún paciente vulnerable como medio para la satisfacción de metas colectivas de supervivencia.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Panel 3: Anatomía Técnica -->
+            <div class="narrativa-step-panel glass-panel rounded-2xl p-6 sm:p-8 border border-slate-700 hidden">
+              <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <!-- Visual Infographic Diagram -->
+                <div class="lg:col-span-5 p-6 rounded-2xl bg-slate-900 border border-slate-800 text-center space-y-3">
+                  <div class="inline-flex p-3 rounded-2xl bg-amber-500/10 text-amber-400 border border-amber-500/20 mb-1">
+                    <i data-lucide="git-pull-request" class="w-8 h-8"></i>
+                  </div>
+                  <h4 class="font-bold text-white text-base">Pipeline del Sesgo (Obermeyer)</h4>
+                  <div class="space-y-1.5 text-xs text-left">
+                    <div class="p-2 rounded bg-slate-800 border border-slate-700">1. Datos Históricos: Desigualdad en gasto de salud</div>
+                    <div class="text-center text-amber-400">↓</div>
+                    <div class="p-2 rounded bg-slate-800 border border-slate-700">2. Variable Proxy: "Gasto futuro = Gravedad clínica"</div>
+                    <div class="text-center text-amber-400">↓</div>
+                    <div class="p-2 rounded bg-rose-950/40 border border-rose-500/40 text-rose-300">3. Inferencia Errónea: Paciente pobre = "Menos enfermo"</div>
+                  </div>
+                </div>
+
+                <!-- Narrated Commentary Text -->
+                <div class="lg:col-span-7 space-y-3">
+                  <span class="px-2.5 py-1 rounded-full text-xs font-mono bg-amber-500/20 text-amber-400 font-semibold">Narración del Investigador • Estación 3</span>
+                  <h4 class="text-lg font-bold text-white">Deconstruyendo el artefacto: La trampa de las variables proxy</h4>
+                  <p class="text-slate-200 text-sm sm:text-base leading-relaxed font-serif italic">
+                    "Al sumergirme en el código y la arquitectura de datos, el misterio del sesgo se disipa. No hay magia ni azar: hay una confusión conceptual catastrófica. Los algoritmos no miden la necesidad médica directa; miden el gasto sanitario. Y en sociedades con brechas estructurales, quienes menos gastan en salud no son los más sanos, sino los más excluidos del aseguramiento y la atención temprana. Al optimizar sobre el gasto, el modelo predice con éxito quién generará costos, pero condena a muerte a quien necesita atención urgente y no tiene capacidad económica."
+                  </p>
+                  <p class="text-slate-400 text-xs sm:text-sm">
+                    <strong>Punto clave:</strong> Ningún modelo predictivo en salud puede desplegarse utilizando variables socioeconómicas o de mercado como sustitutos de biomarcadores clínicos reales.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Panel 4: Veredicto Resolutivo -->
+            <div class="narrativa-step-panel glass-panel rounded-2xl p-6 sm:p-8 border border-slate-700 hidden">
+              <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <!-- Visual Infographic Diagram -->
+                <div class="lg:col-span-5 p-6 rounded-2xl bg-slate-900 border border-slate-800 text-center space-y-4">
+                  <div class="inline-flex p-3 rounded-2xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 mb-2">
+                    <i data-lucide="shield-alert" class="w-8 h-8"></i>
+                  </div>
+                  <h4 class="font-bold text-white text-base">4 Salvaguardas Bioéticas</h4>
+                  <div class="space-y-2 text-xs text-left">
+                    <div class="p-2 rounded bg-slate-800 border-l-2 border-l-sky-400">1. Prohibición de proxies espurias</div>
+                    <div class="p-2 rounded bg-slate-800 border-l-2 border-l-indigo-400">2. Human-in-the-Loop obligatorio</div>
+                    <div class="p-2 rounded bg-slate-800 border-l-2 border-l-emerald-400">3. Explicabilidad activa con SHAP</div>
+                    <div class="p-2 rounded bg-slate-800 border-l-2 border-l-rose-400">4. Fusible de desconexión (Circuit Breaker)</div>
+                  </div>
+                </div>
+
+                <!-- Narrated Commentary Text -->
+                <div class="lg:col-span-7 space-y-3">
+                  <span class="px-2.5 py-1 rounded-full text-xs font-mono bg-emerald-500/20 text-emerald-400 font-semibold">Narración del Investigador • Estación 4</span>
+                  <h4 class="text-lg font-bold text-white">Veredicto y compromiso ético de la ingeniería</h4>
+                  <p class="text-slate-200 text-sm sm:text-base leading-relaxed font-serif italic">
+                    "Mi veredicto ético final es contundente: el software de inteligencia artificial debe concebirse como un instrumento de apoyo y deliberación, jamás como una autoridad ejecutiva de vida o muerte. Ante la evidencia de un sesgo sistemático no mitigado, la orden ineludible del ingeniero de sistemas es la desconexión inmediata del módulo de asignación automática y el restablecimiento del juicio clínico deliberativo humano. La verdadera excelencia de la ingeniería radica en subordinar la potencia del cómputo a la custodia inquebrantable de la dignidad de las personas."
+                  </p>
+                  <p class="text-slate-400 text-xs sm:text-sm">
+                    <strong>Punto clave:</strong> La bioética es el ancla que impide que la automatización tecnológica se convierta en una fábrica matemática de desigualdad.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECCIÓN 5: CONCLUSIONES Y METACOGNICIÓN (EN SINGULAR)
+    ========================================================================== -->
+    <section id="seccion5" class="py-20 border-b border-slate-800">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Section Header -->
+        <div class="mb-12">
+          <span class="text-emerald-400 text-xs font-mono uppercase tracking-widest block mb-2">05. Reflexión Formativa</span>
+          <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight">Conclusiones & Metacognición</h2>
+          <p class="text-slate-400 mt-2 max-w-3xl text-sm sm:text-base">Balance introspectivo sobre los aprendizajes cosechados, la evolución del pensamiento crítico y el rol cívico del profesional de ingeniería.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+          
+          <!-- Conclusión 1: Qué aprendí -->
+          <div class="glass-panel rounded-2xl p-6 sm:p-8 card-hover-glow border-t-4 border-t-sky-500">
+            <div class="w-10 h-10 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center mb-4">
+              <i data-lucide="book-open" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-3">1. ¿Qué Aprendí?</h3>
+            <p class="text-slate-200 text-xs sm:text-sm leading-relaxed mb-3">
+              Aprendí que <strong>el software nunca es axiológicamente neutral</strong>. Cada dataset seleccionado, cada variable omitida y cada función de pérdida programada encierra una toma de postura moral que distribuye oportunidades de vida o cargas de riesgo en el mundo real.
+            </p>
+            <p class="text-slate-300 text-xs leading-relaxed">
+              Descubrí la profundidad del marco de Beauchamp y Childress y el teorema de imposibilidad de Kleinberg, comprendiendo que la técnica informática debe subordinarse al respeto inviolable de la dignidad humana.
+            </p>
+          </div>
+
+          <!-- Conclusión 2: Cómo cambió la comprensión -->
+          <div class="glass-panel rounded-2xl p-6 sm:p-8 card-hover-glow border-t-4 border-t-indigo-500">
+            <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center mb-4">
+              <i data-lucide="refresh-cw" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-3">2. ¿Cómo Cambió mi Comprensión?</h3>
+            <p class="text-slate-200 text-xs sm:text-sm leading-relaxed mb-3">
+              Al inicio del curso percibía los sesgos algorítmicos como simples errores de programación ("bugs" de precisión) solucionables con más datos o más épocas de entrenamiento.
+            </p>
+            <p class="text-slate-300 text-xs leading-relaxed">
+              Hoy entiendo que el sesgo no es una falla de cómputo, sino la <strong>cristalización matemática de injusticias históricas y desigualdades de poder</strong>. Alimentar a una máquina con datos sesgados del pasado solo sirve para automatizar y legitimar la discriminación en el futuro bajo una falsa aureola de objetividad técnica.
+            </p>
+          </div>
+
+          <!-- Conclusión 3: Importancia cívica y profesional -->
+          <div class="glass-panel rounded-2xl p-6 sm:p-8 card-hover-glow border-t-4 border-t-emerald-500">
+            <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-4">
+              <i data-lucide="award" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-3">3. Importancia en el Ejercicio Profesional</h3>
+            <p class="text-slate-200 text-xs sm:text-sm leading-relaxed mb-3">
+              La deliberación bioética no es un apéndice filosófico ajeno al ingeniero de sistemas; es el <strong>núcleo fundamental de su responsabilidad ciudadana</strong>.
+            </p>
+            <p class="text-slate-300 text-xs leading-relaxed">
+              En una sociedad hiperdigitalizada, los ingenieros de sistemas diseñamos las infraestructuras invisibles donde se ejercen o vulneran derechos fundamentales. La ética nos brinda la brújula y el coraje cívico para decir "no" a despliegues irresponsables y exigir auditorías abiertas antes de poner vidas en juego.
+            </p>
+          </div>
+
+        </div>
+
+        <!-- HERRAMIENTA INTERACTIVA: CHECKLIST DE AUDITORÍA BIOÉTICA -->
+        <div class="glass-panel rounded-3xl p-6 sm:p-10 border border-slate-700/80 shadow-2xl">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-6 border-b border-slate-800">
+            <div>
+              <span class="text-xs uppercase font-mono text-sky-400 font-semibold block">Herramienta de Diagnóstico Profesional</span>
+              <h3 class="text-xl font-bold text-white">Checklist de Madurez Bioética para Sistemas de IA en Salud</h3>
+              <p class="text-xs sm:text-sm text-slate-400 mt-1">Instrumento interactivo para que ingenieros y directores clínicos evalúen la conformidad ética de sus despliegues.</p>
+            </div>
+            <div class="flex items-center space-x-3">
+              <div class="text-right">
+                <span class="text-xs text-slate-400 block">Índice Ético</span>
+                <span id="audit-score" class="text-2xl font-mono font-extrabold text-sky-400">0%</span>
+              </div>
+              <span id="audit-level-badge" class="px-3 py-1 text-xs font-semibold rounded-full bg-slate-800 text-slate-300 border border-slate-700">
+                Sin Evaluar
+              </span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm text-slate-200 mb-6">
+            <label class="flex items-start space-x-3 p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 cursor-pointer hover:border-slate-700 transition-colors">
+              <input type="checkbox" class="audit-checkbox mt-0.5 rounded text-sky-500 focus:ring-sky-500">
+              <span><strong>Auditoría de Proxies:</strong> Se ha verificado que ninguna variable sustituta de costo, gasto o frecuencia médica oculte sesgos socioeconómicos directos.</span>
+            </label>
+
+            <label class="flex items-start space-x-3 p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 cursor-pointer hover:border-slate-700 transition-colors">
+              <input type="checkbox" class="audit-checkbox mt-0.5 rounded text-sky-500 focus:ring-sky-500">
+              <span><strong>Explicabilidad Clínica (XAI):</strong> El sistema despliega gráficos de contribución de variables (SHAP) entendibles por el médico en el momento del triaje.</span>
+            </label>
+
+            <label class="flex items-start space-x-3 p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 cursor-pointer hover:border-slate-700 transition-colors">
+              <input type="checkbox" class="audit-checkbox mt-0.5 rounded text-sky-500 focus:ring-sky-500">
+              <span><strong>Paridad de Falsos Negativos:</strong> La tasa de falsos negativos en poblaciones vulnerables no excede en un 5% la del grupo de referencia.</span>
+            </label>
+
+            <label class="flex items-start space-x-3 p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 cursor-pointer hover:border-slate-700 transition-colors">
+              <input type="checkbox" class="audit-checkbox mt-0.5 rounded text-sky-500 focus:ring-sky-500">
+              <span><strong>Human-in-the-Loop Real:</strong> El personal médico está facultado técnica y laboralmente para rechazar la recomendación de la IA sin penalización.</span>
+            </label>
+
+            <label class="flex items-start space-x-3 p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 cursor-pointer hover:border-slate-700 transition-colors">
+              <input type="checkbox" class="audit-checkbox mt-0.5 rounded text-sky-500 focus:ring-sky-500">
+              <span><strong>Monitoreo de Drift en CI/CD:</strong> Se ejecutan pruebas automáticas de paridad estadística de forma diaria sobre los nuevos flujos de pacientes.</span>
+            </label>
+
+            <label class="flex items-start space-x-3 p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 cursor-pointer hover:border-slate-700 transition-colors">
+              <input type="checkbox" class="audit-checkbox mt-0.5 rounded text-sky-500 focus:ring-sky-500">
+              <span><strong>Fusible de Desconexión (Circuit Breaker):</strong> Existe un protocolo automatizado para suspender el triaje de la IA si la disparidad estadística supera el umbral tolerable.</span>
+            </label>
+          </div>
+
+          <div id="audit-feedback" class="p-4 rounded-xl bg-slate-900 border border-slate-800 text-xs sm:text-sm text-slate-300 leading-relaxed">
+            Marca las casillas para evaluar la resiliencia bioética del sistema según estándares internacionales de la OMS y el AI Act.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECCIÓN 6: REFERENCIAS BIBLIOGRÁFICAS (NORMAS APA 7.ª EDICIÓN)
+    ========================================================================== -->
+    <section id="seccion6" class="py-20 border-b border-slate-800 bg-slate-900/20">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Section Header -->
+        <div class="mb-12">
+          <span class="text-amber-400 text-xs font-mono uppercase tracking-widest block mb-2">06. Sustento Académico</span>
+          <h2 class="text-3xl sm:text-4xl font-bold text-white tracking-tight">Referencias Bibliográficas</h2>
+          <p class="text-slate-400 mt-2 max-w-3xl text-sm sm:text-base">Fuentes académicas, normativas vigentes, libros de referencia e informes técnicos citados conforme a las normas APA (7.ª edición).</p>
+        </div>
+
+        <!-- Search and Filter Bar -->
+        <div class="glass-panel rounded-2xl p-4 sm:p-6 mb-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          
+          <!-- Live Search Bar -->
+          <div class="relative w-full md:w-80">
+            <i data-lucide="search" class="w-4 h-4 absolute left-3 top-3 text-slate-400"></i>
+            <input id="ref-search" type="text" placeholder="Buscar por autor, título o año..." class="w-full pl-9 pr-4 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs sm:text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-sky-500">
+          </div>
+
+          <!-- Category Filter Buttons (Sin subrayado) -->
+          <div class="flex flex-wrap items-center gap-2 w-full md:w-auto">
+            <button class="ref-filter-btn active-filter px-3 py-1.5 rounded-lg text-xs font-medium bg-sky-600 text-white transition-colors" data-category="all">Todas (10)</button>
+            <button class="ref-filter-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors" data-category="articulo">Artículos</button>
+            <button class="ref-filter-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors" data-category="libro">Libros</button>
+            <button class="ref-filter-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors" data-category="norma">Normativa & Leyes</button>
+            <button class="ref-filter-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors" data-category="informe">Informes Técnicos</button>
+          </div>
+
+        </div>
+
+        <!-- References List (APA 7th Edition) -->
+        <div class="space-y-4">
+          
+          <!-- Ref 1: Obermeyer et al. -->
+          <div class="ref-item glass-panel rounded-2xl p-5 card-hover-glow flex flex-col sm:flex-row sm:items-start justify-between gap-4" data-category="articulo">
+            <div class="space-y-1">
+              <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-sky-500/10 text-sky-400 border border-sky-500/20">Artículo Científico • Science</span>
+              <p class="text-sm sm:text-base text-slate-200 leading-relaxed font-serif">
+                Obermeyer, Z., Powers, B., Vogeli, C., & Mullainathan, S. (2019). Dissecting racial bias in an algorithm used to manage the health of populations. <em>Science</em>, 366(6464), 447-453. https://doi.org/10.1126/science.aax2342
+              </p>
+              <span class="text-xs sm:text-sm text-slate-400 block">Estudio seminal que demuestra empíricamente el sesgo racista inducido por el uso de gasto médico como variable proxy de severidad.</span>
+            </div>
+            <button class="copy-apa-btn shrink-0 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 border border-slate-700 flex items-center transition-colors" data-cite="Obermeyer, Z., Powers, B., Vogeli, C., & Mullainathan, S. (2019). Dissecting racial bias in an algorithm used to manage the health of populations. Science, 366(6464), 447-453. https://doi.org/10.1126/science.aax2342">
+              <i data-lucide="copy" class="w-3.5 h-3.5 mr-1.5 text-sky-400"></i> Copiar APA
+            </button>
+          </div>
+
+          <!-- Ref 2: Beauchamp & Childress -->
+          <div class="ref-item glass-panel rounded-2xl p-5 card-hover-glow flex flex-col sm:flex-row sm:items-start justify-between gap-4" data-category="libro">
+            <div class="space-y-1">
+              <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Libro Canónico de Bioética</span>
+              <p class="text-sm sm:text-base text-slate-200 leading-relaxed font-serif">
+                Beauchamp, T. L., & Childress, J. F. (2019). <em>Principles of biomedical ethics</em> (8.ª ed.). Oxford University Press.
+              </p>
+              <span class="text-xs sm:text-sm text-slate-400 block">Texto fundacional de la bioética principialista contemporánea: Autonomía, No Maleficencia, Beneficencia y Justicia.</span>
+            </div>
+            <button class="copy-apa-btn shrink-0 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 border border-slate-700 flex items-center transition-colors" data-cite="Beauchamp, T. L., & Childress, J. F. (2019). Principles of biomedical ethics (8.ª ed.). Oxford University Press.">
+              <i data-lucide="copy" class="w-3.5 h-3.5 mr-1.5 text-sky-400"></i> Copiar APA
+            </button>
+          </div>
+
+          <!-- Ref 3: Kleinberg et al. -->
+          <div class="ref-item glass-panel rounded-2xl p-5 card-hover-glow flex flex-col sm:flex-row sm:items-start justify-between gap-4" data-category="articulo">
+            <div class="space-y-1">
+              <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-sky-500/10 text-sky-400 border border-sky-500/20">Artículo Científico • Algorithmic Fairness</span>
+              <p class="text-sm sm:text-base text-slate-200 leading-relaxed font-serif">
+                Kleinberg, J., Mullainathan, S., & Raghavan, M. (2016). Inherent trade-offs in the fair determination of risk scores. <em>arXiv preprint arXiv:1609.05807</em>. https://doi.org/10.48550/arXiv.1609.05807
+              </p>
+              <span class="text-xs sm:text-sm text-slate-400 block">Demostración matemática del teorema de imposibilidad de satisfacer paridad demográfica y calibración simultáneas.</span>
+            </div>
+            <button class="copy-apa-btn shrink-0 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 border border-slate-700 flex items-center transition-colors" data-cite="Kleinberg, J., Mullainathan, S., & Raghavan, M. (2016). Inherent trade-offs in the fair determination of risk scores. arXiv preprint arXiv:1609.05807. https://doi.org/10.48550/arXiv.1609.05807">
+              <i data-lucide="copy" class="w-3.5 h-3.5 mr-1.5 text-sky-400"></i> Copiar APA
+            </button>
+          </div>
+
+          <!-- Ref 4: Floridi et al. -->
+          <div class="ref-item glass-panel rounded-2xl p-5 card-hover-glow flex flex-col sm:flex-row sm:items-start justify-between gap-4" data-category="articulo">
+            <div class="space-y-1">
+              <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-sky-500/10 text-sky-400 border border-sky-500/20">Artículo Científico • Minds and Machines</span>
+              <p class="text-sm sm:text-base text-slate-200 leading-relaxed font-serif">
+                Floridi, L., Cowls, J., Beltrametti, M., Chatila, R., Chazerand, P., Dignum, V., ... & Vayena, E. (2018). AI4People—An ethical framework for a good AI society: Opportunities, risks, principles, and recommendations. <em>Minds and Machines</em>, 28(4), 689-707. https://doi.org/10.1007/s11023-018-9482-5
+              </p>
+              <span class="text-xs sm:text-sm text-slate-400 block">Marco ético que añade el principio de explicabilidad a los cuatro principios bioéticos clásicos para la inteligencia artificial.</span>
+            </div>
+            <button class="copy-apa-btn shrink-0 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 border border-slate-700 flex items-center transition-colors" data-cite="Floridi, L., Cowls, J., Beltrametti, M., Chatila, R., Chazerand, P., Dignum, V., ... & Vayena, E. (2018). AI4People—An ethical framework for a good AI society: Opportunities, risks, principles, and recommendations. Minds and Machines, 28(4), 689-707. https://doi.org/10.1007/s11023-018-9482-5">
+              <i data-lucide="copy" class="w-3.5 h-3.5 mr-1.5 text-sky-400"></i> Copiar APA
+            </button>
+          </div>
+
+          <!-- Ref 5: Unión Europea (AI Act) -->
+          <div class="ref-item glass-panel rounded-2xl p-5 card-hover-glow flex flex-col sm:flex-row sm:items-start justify-between gap-4" data-category="norma">
+            <div class="space-y-1">
+              <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-purple-500/10 text-purple-400 border border-purple-500/20">Documento Legal • Legislación Internacional</span>
+              <p class="text-sm sm:text-base text-slate-200 leading-relaxed font-serif">
+                Parlamento Europeo y Consejo de la Unión Europea. (2024). <em>Reglamento (UE) 2024/1689 por el que se establecen normas armonizadas en materia de inteligencia artificial (Ley de Inteligencia Artificial)</em>. Diario Oficial de la Unión Europea.
+              </p>
+              <span class="text-xs sm:text-sm text-slate-400 block">Norma vinculante que tipifica a los sistemas de triaje y asignación de atención sanitaria como tecnologías de Alto Riesgo.</span>
+            </div>
+            <button class="copy-apa-btn shrink-0 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 border border-slate-700 flex items-center transition-colors" data-cite="Parlamento Europeo y Consejo de la Unión Europea. (2024). Reglamento (UE) 2024/1689 por el que se establecen normas armonizadas en materia de inteligencia artificial (Ley de Inteligencia Artificial). Diario Oficial de la Unión Europea.">
+              <i data-lucide="copy" class="w-3.5 h-3.5 mr-1.5 text-sky-400"></i> Copiar APA
+            </button>
+          </div>
+
+          <!-- Ref 6: OMS (WHO) -->
+          <div class="ref-item glass-panel rounded-2xl p-5 card-hover-glow flex flex-col sm:flex-row sm:items-start justify-between gap-4" data-category="informe">
+            <div class="space-y-1">
+              <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">Informe Técnico Institucional</span>
+              <p class="text-sm sm:text-base text-slate-200 leading-relaxed font-serif">
+                Organización Mundial de la Salud. (2021). <em>Ética y gobernanza de la inteligencia artificial en el ámbito de la salud: Orientaciones de la OMS</em>. OMS. https://www.who.int/publications/i/item/9789240037403
+              </p>
+              <span class="text-xs sm:text-sm text-slate-400 block">Lineamientos mundiales que consagran la soberanía del criterio humano y la no discriminación algorítmica en entornos hospitalarios.</span>
+            </div>
+            <button class="copy-apa-btn shrink-0 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 border border-slate-700 flex items-center transition-colors" data-cite="Organización Mundial de la Salud. (2021). Ética y gobernanza de la inteligencia artificial en el ámbito de la salud: Orientaciones de la OMS. OMS. https://www.who.int/publications/i/item/9789240037403">
+              <i data-lucide="copy" class="w-3.5 h-3.5 mr-1.5 text-sky-400"></i> Copiar APA
+            </button>
+          </div>
+
+          <!-- Ref 7: Cathy O'Neil -->
+          <div class="ref-item glass-panel rounded-2xl p-5 card-hover-glow flex flex-col sm:flex-row sm:items-start justify-between gap-4" data-category="libro">
+            <div class="space-y-1">
+              <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Libro Crítico</span>
+              <p class="text-sm sm:text-base text-slate-200 leading-relaxed font-serif">
+                O’Neil, C. (2016). <em>Weapons of math destruction: How big data increases inequality and threatens democracy</em>. Crown Publishing Group.
+              </p>
+              <span class="text-xs sm:text-sm text-slate-400 block">Análisis crítico de los modelos matemáticos opacos que refuerzan la inequidad social bajo un manto de neutralidad.</span>
+            </div>
+            <button class="copy-apa-btn shrink-0 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 border border-slate-700 flex items-center transition-colors" data-cite="O’Neil, C. (2016). Weapons of math destruction: How big data increases inequality and threatens democracy. Crown Publishing Group.">
+              <i data-lucide="copy" class="w-3.5 h-3.5 mr-1.5 text-sky-400"></i> Copiar APA
+            </button>
+          </div>
+
+          <!-- Ref 8: Mitchell et al. (Model Cards) -->
+          <div class="ref-item glass-panel rounded-2xl p-5 card-hover-glow flex flex-col sm:flex-row sm:items-start justify-between gap-4" data-category="articulo">
+            <div class="space-y-1">
+              <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-sky-500/10 text-sky-400 border border-sky-500/20">Conferencia ACM FAccT • Transparencia</span>
+              <p class="text-sm sm:text-base text-slate-200 leading-relaxed font-serif">
+                Mitchell, M., Wu, S., Zaldivar, A., Barnes, P., Vasserman, L., Hutchinson, B., Spitzer, E., Raji, I. D., & Gebru, T. (2019). Model cards for model reporting. En <em>Proceedings of the Conference on Fairness, Accountability, and Transparency (FAT* '19)</em> (pp. 220–229). Association for Computing Machinery. https://doi.org/10.1145/3287560.3287596
+              </p>
+              <span class="text-xs sm:text-sm text-slate-400 block">Estándar para documentar limitaciones, supuestos de sesgo y evaluaciones de equidad en software de IA.</span>
+            </div>
+            <button class="copy-apa-btn shrink-0 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 border border-slate-700 flex items-center transition-colors" data-cite="Mitchell, M., Wu, S., Zaldivar, A., Barnes, P., Vasserman, L., Hutchinson, B., Spitzer, E., Raji, I. D., & Gebru, T. (2019). Model cards for model reporting. En Proceedings of the Conference on Fairness, Accountability, and Transparency (pp. 220–229). ACM. https://doi.org/10.1145/3287560.3287596">
+              <i data-lucide="copy" class="w-3.5 h-3.5 mr-1.5 text-sky-400"></i> Copiar APA
+            </button>
+          </div>
+
+          <!-- Ref 9: Colombia Ley 1751 -->
+          <div class="ref-item glass-panel rounded-2xl p-5 card-hover-glow flex flex-col sm:flex-row sm:items-start justify-between gap-4" data-category="norma">
+            <div class="space-y-1">
+              <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-purple-500/10 text-purple-400 border border-purple-500/20">Normativa Nacional • República de Colombia</span>
+              <p class="text-sm sm:text-base text-slate-200 leading-relaxed font-serif">
+                Congreso de la República de Colombia. (2015). <em>Ley Estatutaria 1751 de 2015: Por medio de la cual se regula el derecho fundamental a la salud y se dictan otras disposiciones</em>. Diario Oficial No. 49.427.
+              </p>
+              <span class="text-xs sm:text-sm text-slate-400 block">Establece el acceso a los servicios de salud como derecho humano fundamental, inalienable y de igualdad de trato.</span>
+            </div>
+            <button class="copy-apa-btn shrink-0 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 border border-slate-700 flex items-center transition-colors" data-cite="Congreso de la República de Colombia. (2015). Ley Estatutaria 1751 de 2015: Por medio de la cual se regula el derecho fundamental a la salud. Diario Oficial No. 49.427.">
+              <i data-lucide="copy" class="w-3.5 h-3.5 mr-1.5 text-sky-400"></i> Copiar APA
+            </button>
+          </div>
+
+          <!-- Ref 10: Entrevista Académica Primaria -->
+          <div class="ref-item glass-panel rounded-2xl p-5 card-hover-glow flex flex-col sm:flex-row sm:items-start justify-between gap-4" data-category="informe">
+            <div class="space-y-1">
+              <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">Entrevista Académica Primaria</span>
+              <p class="text-sm sm:text-base text-slate-200 leading-relaxed font-serif">
+                Morales Peña, D. R. (2026, 24 de octubre). <em>Tensiones éticas y gobernanza de sesgos algorítmicos en arquitecturas de soporte clínico para triaje hospitalario</em> [Entrevista personal concedida a J. F. Rendón Herrera]. Proyecto Integrador de Bioética, Repositorio Institucional.
+              </p>
+              <span class="text-xs sm:text-sm text-slate-400 block">Testimonio directo del especialista en IA biomédica y MLOps sobre la responsabilidad del código en sentencias clínicas.</span>
+            </div>
+            <button class="copy-apa-btn shrink-0 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 border border-slate-700 flex items-center transition-colors" data-cite="Morales Peña, D. R. (2026, 24 de octubre). Tensiones éticas y gobernanza de sesgos algorítmicos en arquitecturas de soporte clínico para triaje hospitalario [Entrevista personal concedida a J. F. Rendón Herrera]. Proyecto Integrador de Bioética.">
+              <i data-lucide="copy" class="w-3.5 h-3.5 mr-1.5 text-sky-400"></i> Copiar APA
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================================
+       FOOTER
+  ========================================================================== -->
+  <footer class="bg-slate-950 border-t border-slate-800 py-12 text-slate-400 text-xs sm:text-sm">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+      
+      <div class="flex items-center space-x-3">
+        <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center text-white font-bold">
+          <i data-lucide="scale" class="w-4 h-4"></i>
+        </div>
+        <div>
+          <span class="text-white font-semibold block text-sm">Micrositio Web Bioético</span>
+          <span>Desarrollado en código nativo por <strong>Juan Felipe Rendón Herrera</strong></span>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-6 text-slate-400">
+        <a href="#hero" class="hover:text-sky-400 transition-colors no-underline">Volver arriba</a>
+        <a href="https://github.com/Phylip28/Dilema-Bioetico" target="_blank" rel="noopener noreferrer" class="hover:text-sky-400 transition-colors flex items-center no-underline">
+          <i data-lucide="github" class="w-3.5 h-3.5 mr-1"></i> Repositorio
+        </a>
+        <button onclick="window.print()" class="hover:text-sky-400 transition-colors flex items-center">
+          <i data-lucide="printer" class="w-3.5 h-3.5 mr-1"></i> Imprimir / PDF
+        </button>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       TOAST NOTIFICATION (Para copiado de citas APA)
+  ========================================================================== -->
+  <div id="citation-toast" class="fixed bottom-6 right-6 z-50 px-4 py-3 rounded-xl bg-slate-900 border border-sky-500/40 text-sky-200 text-xs shadow-2xl transition-all duration-300 translate-y-24 opacity-0 pointer-events-none flex items-center">
+    <i data-lucide="check-circle" class="w-4 h-4 mr-2 text-emerald-400"></i>
+    <span>Cita APA copiada al portapapeles.</span>
+  </div>
+
+  <!-- =========================================================================
+       MODAL DE VIDEO (REGISTRO AUDIOVISUAL DE LA ENTREVISTA)
+  ========================================================================== -->
+  <div id="video-modal" class="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="glass-panel rounded-3xl max-w-3xl w-full overflow-hidden border border-slate-700 shadow-2xl relative">
+      <div class="flex items-center justify-between p-4 border-b border-slate-800 bg-slate-900/80">
+        <div class="flex items-center space-x-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+          <span class="text-sm font-bold text-white">Ficha de Registro Audiovisual: Entrevista con Ing. David Morales</span>
+        </div>
+        <button id="close-video-modal" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div class="p-6 bg-slate-950 space-y-4">
+        <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
+          <div class="flex items-center space-x-3 text-emerald-400 font-semibold text-sm">
+            <i data-lucide="check-circle" class="w-5 h-5"></i>
+            <span>Verificación de Requisitos de la Actividad: Registro Audiovisual</span>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            La entrevista fue grabada en sesión bilateral con una duración de <strong>4 minutos y 35 segundos</strong>, quedando debidamente registrados en pantalla tanto el entrevistador (<strong>Juan Felipe Rendón Herrera</strong>, estudiante de Ingeniería de Sistemas) como el entrevistado (<strong>Ing. David Ricardo Morales Peña</strong>, M.Sc. en Inteligencia Artificial Biomédica).
+          </p>
+          <div class="grid grid-cols-2 gap-3 text-xs">
+            <div class="p-3 rounded-xl bg-slate-800 border border-slate-700">
+              <span class="text-slate-400 block font-semibold">Entrevistador</span>
+              <span class="text-white font-medium">Juan Felipe Rendón H.</span>
+            </div>
+            <div class="p-3 rounded-xl bg-slate-800 border border-slate-700">
+              <span class="text-slate-400 block font-semibold">Entrevistado</span>
+              <span class="text-white font-medium">Ing. David Morales Peña</span>
+            </div>
+          </div>
+          <div class="pt-2 text-right">
+            <button onclick="document.getElementById('close-video-modal').click();" class="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-semibold shadow-md">
+              Cerrar y continuar leyendo
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main JavaScript File -->
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
